@@ -51,7 +51,7 @@ export const AuthProvider = ({
 
       const res =
         await api.post(
-          "/routes/register",
+          "/users/register",
           {
             name: username,
             email,
@@ -59,23 +59,41 @@ export const AuthProvider = ({
           }
         );
 
-      setUser(
-        res.data.user
-      );
+      console.log(res.data);
 
-      localStorage.setItem(
-        "token",
-        res.data.token
-      );
+      if (
+        res.data?.user
+      ) {
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify(
+        setUser(
           res.data.user
-        )
-      );
+        );
 
-      return res.data;
+        localStorage.setItem(
+          "token",
+          res.data.token
+        );
+
+        localStorage.setItem(
+          "user",
+          JSON.stringify(
+            res.data.user
+          )
+        );
+
+        return {
+          success: true,
+          user:
+            res.data.user,
+        };
+      }
+
+      return {
+        success: false,
+        message:
+          res.data?.message ||
+          "Register failed",
+      };
 
     } catch (error) {
 
@@ -84,6 +102,15 @@ export const AuthProvider = ({
           ?.data ||
           error.message
       );
+
+      return {
+        success: false,
+        message:
+          error.response
+            ?.data
+            ?.message ||
+          "Something went wrong",
+      };
 
     } finally {
 
@@ -104,30 +131,48 @@ export const AuthProvider = ({
 
       const res =
         await api.post(
-          "/routes/login",
+          "/users/login",
           {
             email,
             password,
           }
         );
 
-      setUser(
-        res.data.user
-      );
+      console.log(res.data);
 
-      localStorage.setItem(
-        "token",
-        res.data.token
-      );
+      if (
+        res.data?.user
+      ) {
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify(
+        setUser(
           res.data.user
-        )
-      );
+        );
 
-      return res.data;
+        localStorage.setItem(
+          "token",
+          res.data.token
+        );
+
+        localStorage.setItem(
+          "user",
+          JSON.stringify(
+            res.data.user
+          )
+        );
+
+        return {
+          success: true,
+          user:
+            res.data.user,
+        };
+      }
+
+      return {
+        success: false,
+        message:
+          res.data?.message ||
+          "Login failed",
+      };
 
     } catch (error) {
 
@@ -136,6 +181,15 @@ export const AuthProvider = ({
           ?.data ||
           error.message
       );
+
+      return {
+        success: false,
+        message:
+          error.response
+            ?.data
+            ?.message ||
+          "Invalid credentials",
+      };
 
     } finally {
 
