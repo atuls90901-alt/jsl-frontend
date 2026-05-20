@@ -43,17 +43,27 @@ function DashboardHome() {
 
       {/* TOP TEXT */}
 
-      <div className="mb-8">
+      <div className="mb-8 bg-white p-6 rounded-2xl shadow-md border border-gray-100">
 
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800">
-          Welcome Admin
-        </h1>
+  <div className="flex items-center justify-between flex-wrap gap-4">
 
-        <p className="text-gray-500 mt-2 text-sm sm:text-base md:text-lg">
-          Here is your dashboard overview.
-        </p>
+    <div>
+      <h1 className="text-3xl font-bold text-gray-800">
+        Welcome Admin 
+      </h1>
 
-      </div>
+      <p className="text-gray-500 mt-2 text-sm sm:text-base">
+        Here is your dashboard overview.
+      </p>
+    </div>
+
+    <div className="bg-blue-100 text-blue-700 px-4 py-2 rounded-xl font-medium text-sm">
+      Active Dashboard
+    </div>
+
+  </div>
+
+</div>
 
       {/* CARDS */}
 
