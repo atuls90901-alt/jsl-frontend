@@ -172,7 +172,7 @@ function AppContent() {
           text-white
           px-4
           md:px-6
-          py-4
+          py-0.5
           flex
           justify-between
           items-center

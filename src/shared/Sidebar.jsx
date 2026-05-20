@@ -1,6 +1,7 @@
 import {
   Link,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 
 import {
@@ -8,10 +9,10 @@ import {
   FaBoxOpen,
   FaShoppingCart,
   FaUsers,
-  FaChartBar,
   FaCog,
   FaBars,
   FaTimes,
+  FaSignOutAlt,
 } from "react-icons/fa";
 
 import { useState } from "react";
@@ -20,8 +21,18 @@ function Sidebar() {
 
   const location = useLocation();
 
+  const navigate = useNavigate();
+
   const [open, setOpen] =
     useState(false);
+
+  const handleLogout = () => {
+
+    localStorage.removeItem("token");
+
+    navigate("/login");
+
+  };
 
   const menus = [
     {
@@ -48,8 +59,6 @@ function Sidebar() {
       icon: <FaUsers />,
     },
 
-  
-
     {
       name: "Settings",
       path: "/admin/settings",
@@ -61,24 +70,38 @@ function Sidebar() {
     <>
       {/* MOBILE HEADER */}
 
-      <div className="md:hidden fixed top-0 left-0 w-full h-16 bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4 flex items-center gap-4 z-50 shadow-lg">
+      <div className="md:hidden fixed top-0 left-0 w-full h-16 bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4 flex items-center justify-between z-50 shadow-lg">
 
-        {/* HAMBURGER */}
+        <div className="flex items-center gap-4">
+
+          {/* HAMBURGER */}
+
+          <button
+            onClick={() =>
+              setOpen(!open)
+            }
+            className="text-2xl"
+          >
+            {open ? <FaTimes /> : <FaBars />}
+          </button>
+
+          {/* TITLE */}
+
+          <h1 className="text-2xl font-bold">
+            Admin Panel
+          </h1>
+
+        </div>
+
+        {/* MOBILE LOGOUT */}
 
         <button
-          onClick={() =>
-            setOpen(!open)
-          }
-          className="text-2xl"
+          onClick={handleLogout}
+          className="flex items-center gap-2 bg-red-500 hover:bg-red-600 px-3 py-2 rounded-lg text-sm font-medium transition"
         >
-          {open ? <FaTimes /> : <FaBars />}
+          <FaSignOutAlt />
+          Logout
         </button>
-
-        {/* TITLE */}
-
-        <h1 className="text-2xl font-bold">
-          Admin Panel
-        </h1>
 
       </div>
 
@@ -97,35 +120,22 @@ function Sidebar() {
 
       <aside
         className={`
-
         fixed md:sticky
-
         top-0 left-0
-
         z-50
-
         w-72
-
         h-screen
-
         bg-gradient-to-b from-gray-900 to-gray-800
-
         text-white
-
         p-6
-
         flex flex-col
-
         shadow-2xl
-
         transition-transform duration-300
-
         ${
           open
             ? "translate-x-0"
             : "-translate-x-full md:translate-x-0"
         }
-
         `}
       >
 
@@ -134,9 +144,7 @@ function Sidebar() {
         <div className="flex items-center justify-between mb-10">
 
           <h1 className="text-3xl font-bold tracking-wide">
-
             ShopEase
-
           </h1>
 
           {/* CLOSE BUTTON */}
@@ -165,25 +173,17 @@ function Sidebar() {
                 setOpen(false)
               }
               className={`
-
               flex items-center gap-4
-
               px-5 py-4
-
               rounded-2xl
-
               transition-all duration-300
-
               text-lg font-medium
-
               ${
                 location.pathname ===
                 item.path
                   ? "bg-blue-600 shadow-lg"
-
                   : "hover:bg-gray-700"
               }
-
               `}
             >
 
@@ -200,10 +200,6 @@ function Sidebar() {
           ))}
 
         </nav>
-
-      
-
-       
 
       </aside>
     </>
